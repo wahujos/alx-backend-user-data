@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """importing the necessary modules"""
+import logging
 import re
 from typing import List
 
-
-import logging
+PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
 
 class RedactingFormatter(logging.Formatter):
@@ -36,3 +36,15 @@ def filter_datum(
     pattern = '|'.join([f'{field}=.*?(?={separator}|$)' for field in fields])
     return re.sub(pattern, lambda m:
                   f"{m.group(0).split('=')[0]}={redaction}", message)
+
+
+def get_logger() -> logging.Logger:
+    """function takes no arguments and returns a logging.Logger object."""
+    logger = get_logger("user_data")
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    stream_handler = logging.StreamHandler()
+    formatter = RedactingFormatter(fields=PII_FIELDS)
+    stream_handler.setFormatter(formatter)
+    logger.addHandler(stream_handler)
+    return logger
