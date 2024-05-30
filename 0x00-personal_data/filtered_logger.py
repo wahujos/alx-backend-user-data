@@ -42,7 +42,7 @@ def filter_datum(
 
 def get_logger() -> logging.Logger:
     """function takes no arguments and returns a logging.Logger object."""
-    logger = logging.get_logger("user_data")
+    logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
     stream_handler = logging.StreamHandler()
@@ -69,3 +69,25 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         database=db_name
     )
     return conn
+
+
+def main():
+    """connect to the database"""
+    db_connection = get_db()
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT * FROM users")
+    rows = cursor.fetchall()
+    logger = get_logger()
+    for row in rows:
+        message = (
+            f"name={row[0]}; email={row[1]}; phone={row[2]}; ssn={row[3]};"
+            f"password={row[4]}; ip={row[5]}; last_login={row[6]};"
+            f" user_agent={row[7]};"
+        )
+        logger.info(message)
+    cursor.close()
+    db_connection.close()
+
+
+if __name__ == "__main__":
+    main()
