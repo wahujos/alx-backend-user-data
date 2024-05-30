@@ -40,7 +40,7 @@ def filter_datum(
 
 def get_logger() -> logging.Logger:
     """function takes no arguments and returns a logging.Logger object."""
-    logger = get_logger("user_data")
+    logger = logging.get_logger("user_data")
     logger.setLevel(logging.INFO)
     logger.propagate = False
     stream_handler = logging.StreamHandler()
