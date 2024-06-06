@@ -24,6 +24,7 @@ white_listed_path = [
     '/api/v1/forbidden/'
 ]
 
+
 @app.before_request
 def before_each_request():
     """This function runs before each request"""
@@ -35,7 +36,6 @@ def before_each_request():
         abort(401)
     if auth.current_user(request) is None:
         abort(403)
-
 
 
 @app.errorhandler(404)
