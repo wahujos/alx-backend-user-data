@@ -9,4 +9,3 @@ class BasicAuth(Auth):
     """
     class inherits from auth
     """
-    pass
