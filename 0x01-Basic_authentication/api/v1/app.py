@@ -17,6 +17,9 @@ Auth_type = os.getenv('AUTH_TYPE')
 if Auth_type == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
+if Auth_type == 'basic_auth':
+    from api.v1.auth.basic_auth import BasicAuth
+    auth = BasicAuth()
 
 white_listed_path = [
     '/api/v1/status/',
