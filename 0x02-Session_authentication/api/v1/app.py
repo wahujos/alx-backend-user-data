@@ -20,6 +20,9 @@ if Auth_type == 'auth':
 if Auth_type == 'basic_auth':
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
+if Auth_type == 'session_auth':
+    from api.v1.auth.session_auth import SessionAuth
+    auth = SessionAuth()
 
 white_listed_path = [
     '/api/v1/status/',
