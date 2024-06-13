@@ -63,3 +63,16 @@ class Auth:
         if check:
             return True
         return False
+
+    def create_session(self, email: str) -> str:
+        """
+        It takes an email string argument and
+        returns the session ID as a string.
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        new_uuid = _generate_uuid()
+        user.session_id = new_uuid
+        return user.session_id
