@@ -11,7 +11,7 @@ AUTH = Auth()
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
-def hello_world():
+def hello_world() -> str:
     """
     function to invoke
     """
@@ -19,7 +19,7 @@ def hello_world():
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def post_users():
+def post_users() -> str:
     """
     implement the end-point to register a user
     """
@@ -34,7 +34,7 @@ def post_users():
 
 
 @app.route('/sessions', methods=['POST'], strict_slashes=False)
-def login():
+def login() -> str:
     """
     The request is expected to contain form data with
     "email" and a "password" fields.
