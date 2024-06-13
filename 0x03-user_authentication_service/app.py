@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 AUTH = Auth()
 
+
 @app.route('/', methods=['GET'], strict_slashes=False)
 def hello_world():
     """
