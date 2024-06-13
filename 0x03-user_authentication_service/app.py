@@ -4,7 +4,7 @@ documenting the necessary imports
 """
 from flask import Flask, jsonify, request, abort
 from auth import Auth
-from sqlalchemy.orm.exc import NoResultFound
+
 app = Flask(__name__)
 
 AUTH = Auth()
@@ -41,13 +41,12 @@ def login() -> str:
     """
     email = request.form.get('email')
     password = request.form.get('password')
-    if Auth.valid_login(email, password):
-        new_session = AUTH.create_session(email)
-        response = jsonify({"email": email, "message": "logged in"})
-        response.set_cookie("session_id", new_session)
-        return response
-    else:
+    if not AUTH.valid_login(email, password):
         abort(401)
+    new_session = AUTH.create_session(email)
+    response = jsonify({"email": email, "message": "logged in"})
+    response.set_cookie("session_id", new_session)
+    return response
 
 
 if __name__ == "__main__":
