@@ -107,9 +107,10 @@ class Auth:
         implement the Auth.get_reset_password_token method.
         It take an email string argument and returns a string.
         """
-        user = self._db.find_user_by(email=email)
-        if not user or not email:
-            raise ValueError()
-        uuid = _generate_uuid()
-        self._db.update_user(user.id, reset_token=uuid)
-        return uuid
+        try:
+            user = self._db.find_user_by(email=email)
+            uuid = _generate_uuid()
+            self._db.update_user(user.id, reset_token=uuid)
+            return uuid
+        except NoResultFound():
+            raise ValueError
