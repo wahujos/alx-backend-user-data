@@ -4,6 +4,7 @@ documenting the necessary imports
 """
 from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
+from sqlalchemy.orm.exc import NoResultFound
 
 app = Flask(__name__)
 
@@ -84,11 +85,12 @@ def get_reset_password_token():
     implement a get_reset_password_token function
     to respond to the POST /reset_password route.
     """
-    email = request.form.get('email')
-    if not email:
+    try:
+        email = request.form.get('email')
+        token = AUTH.get_reset_password_token(email)
+        return jsonify({"email": email, "reset_token": token}), 200
+    except NoResultFound:
         abort(403)
-    token = AUTH.get_reset_password_token(email)
-    return jsonify({"email": email, "reset_token": token}), 200
 
 
 if __name__ == "__main__":
