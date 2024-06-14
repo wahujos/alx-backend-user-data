@@ -108,7 +108,7 @@ class Auth:
         It take an email string argument and returns a string.
         """
         user = self._db.find_user_by(email=email)
-        if not user:
+        if not user or not email:
             raise ValueError()
         uuid = _generate_uuid()
         self._db.update_user(user.id, reset_token=uuid)
