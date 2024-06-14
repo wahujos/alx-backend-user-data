@@ -112,5 +112,5 @@ class Auth:
             uuid = _generate_uuid()
             self._db.update_user(user.id, reset_token=uuid)
             return uuid
-        except NoResultFound():
+        except NoResultFound:
             raise ValueError
